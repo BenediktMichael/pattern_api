@@ -5,17 +5,15 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-pattern_list = ["Test1", "Test2", "Test3", "Test4", "Test5"]
-available_patterns = ["Test1", "Test2", "Test3", "Test4", "Test5"]
+pattern_list = []#"Test1", "Test2", "Test3", "Test4", "Test5"
+available_patterns = []#"Test1", "Test2", "Test3", "Test4", "Test5"
 used_patterns = []
 
 working_groups = {}
 
 class Pattern(BaseModel):
     name = "Name Pattern"
-    user = []
-
-
+    user = "Name User"
 
 
 @app.get("/groups")
@@ -42,6 +40,15 @@ def send_pattern(pattern: Pattern):
         response = {"status": "success", "name": pattern.name, "author": pattern.user}
         return response
     used_patterns.append(pattern.name)
-    working_groups["pattern".name] = pattern.user
+    working_groups[pattern.name] = [pattern.user]
     response = {"status": "success", "name": pattern.name, "author": pattern.user}
+    return response
+
+@app.post("/init")
+def send_pattern_list(patterns: list):
+    global pattern_list
+    global available_patterns
+    pattern_list = patterns
+    available_patterns = patterns
+    response = {"status": "success", "pattern_list":patterns}
     return response
