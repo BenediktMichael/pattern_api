@@ -44,7 +44,7 @@ def send_pattern(pattern: Pattern):
     response = {"status": "success", "name": pattern.name, "author": pattern.user}
     return response
 
-@app.post("/init")
+@app.post("/init",  include_in_schema=False)
 def send_pattern_list(patterns: list):
     global pattern_list
     global available_patterns
