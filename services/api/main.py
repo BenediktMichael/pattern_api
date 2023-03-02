@@ -9,11 +9,11 @@ pattern_list = ["Test1", "Test2", "Test3", "Test4", "Test5"]
 available_patterns = ["Test1", "Test2", "Test3", "Test4", "Test5"]
 used_patterns = []
 
-working_groups = []
+working_groups = {}
 
 class Pattern(BaseModel):
     name = "Name Pattern"
-    group = []
+    user = []
 
 
 
@@ -35,12 +35,13 @@ def send_pattern(pattern: Pattern):
     if (pattern.name in used_patterns) and (pattern.name not in available_patterns):
         response = {"status": "error", "message": "Pattern already taken"}
         return response
-    if pattern in working_groups:     
+    if (pattern.name in used_patterns):     
         available_patterns.remove(pattern.name)
+        working_groups[pattern.name].append(pattern.user)
         #working_groups[]
-        response = {"status": "success", "name": pattern.name, "author": pattern.group}
+        response = {"status": "success", "name": pattern.name, "author": pattern.user}
         return response
     used_patterns.append(pattern.name)
-    working_groups.append(pattern)
-    response = {"status": "success", "name": pattern.name, "author": pattern.group}
+    working_groups["pattern".name] = pattern.user
+    response = {"status": "success", "name": pattern.name, "author": pattern.user}
     return response
