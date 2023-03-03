@@ -34,8 +34,9 @@ def send_pattern(pattern: Pattern):
         response = {"status": "error", "message": "Pattern already taken"}
         return response
     if (pattern.name in used_patterns):     
-        available_patterns.remove(pattern.name)
         working_groups[pattern.name].append(pattern.user)
+        if len(working_groups[pattern.name]) == 3:
+            available_patterns.remove(pattern.name)
         #working_groups[]
         response = {"status": "success", "name": pattern.name, "author": pattern.user}
         return response
@@ -52,3 +53,5 @@ def send_pattern_list(patterns: list):
     available_patterns = patterns
     response = {"status": "success", "pattern_list":patterns}
     return response
+
+
